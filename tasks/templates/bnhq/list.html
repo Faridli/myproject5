@@ -1,0 +1,54 @@
+{% extends "dashboard/css.html" %} 
+{% load widget_tweaks %}
+
+{% block title %}All Branches{% endblock title %}
+
+{% block content %}
+<main class="max-w-[800px] mx-auto p-6 bg-white rounded-sm">
+    {% comment %} <h1 class="font-extrabold mb-8 text-gray-900 text-center">Go to All Branches</h1> {% endcomment %}
+
+    <div class="flex flex-col gap-6 justify-center">
+        <!-- Card 1 -->
+        <div class=" grid grid-cols-1 bg-gradient-to-r from-pink-400 to-pink-600 font-semibold text-4xl py-6 rounded-xl shadow-xl transform hover:scale-105 hover:shadow-2xl transition-all duration-300 cursor-pointer text-left px-6">
+           <a href="{% url 'br' %}">
+             Bn HQ 
+            <span>Total Manpower = </span> 
+           </a>
+            
+        </div>
+
+        <!-- Card 2 --> 
+       <a href="{% url 'force-detail' %}">
+            <div class="bg-gradient-to-r from-purple-400 to-purple-600 font-semibold text-4xl py-6 rounded-xl shadow-xl transform hover:scale-105 hover:shadow-2xl transition-all duration-300 cursor-pointer text-left px-6">
+            All Force Details
+        </div>
+        </a>
+        
+
+        <!-- Card 3 -->
+        <div class="bg-gradient-to-r from-blue-400 to-blue-600 font-semibold text-4xl py-6 rounded-xl shadow-xl transform hover:scale-105 hover:shadow-2xl transition-all duration-300 cursor-pointer text-left px-6">
+         Duty
+        </div>
+
+        {% comment %} <!-- Card 4 -->
+        <div class="bg-gradient-to-r from-green-400 to-green-600 font-semibold text-4xl py-6 rounded-xl shadow-xl transform hover:scale-105 hover:shadow-2xl transition-all duration-300 cursor-pointer text-left px-6">
+            A Br
+        </div>
+
+        <!-- Card 5 -->
+        <div class="bg-gradient-to-r from-yellow-400 to-yellow-600 font-semibold text-4xl py-6 rounded-xl shadow-xl transform hover:scale-105 hover:shadow-2xl transition-all duration-300 cursor-pointer text-left px-6">
+            Mi Branch
+        </div>
+
+        <!-- Card 6 -->
+        <div class="bg-gradient-to-r from-orange-400 to-orange-600 font-semibold text-4xl py-6 rounded-xl shadow-xl transform hover:scale-105 hover:shadow-2xl transition-all duration-300 cursor-pointer text-left px-6">
+            Mt
+        </div>
+
+        <!-- Card 7 -->
+        <div class="bg-gradient-to-r from-red-400 to-red-600 font-semibold text-4xl py-6 rounded-xl shadow-xl transform hover:scale-105 hover:shadow-2xl transition-all duration-300 cursor-pointer text-left px-6">
+            Other Branch
+        </div> {% endcomment %}
+    </div>
+</main>
+{% endblock content %}

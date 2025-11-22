@@ -1,0 +1,73 @@
+{% extends "dashboard/css.html" %} 
+{% load widget_tweaks %}
+{% load dict_extras %} 
+{% block title %}All Forces{% endblock title %}
+
+{% block content %}
+<main class="p-6 space-y-6">
+
+<table class="bg-white table-auto w-full border">
+<thead>
+    <tr class="bg-amber-400 text-3xl">
+        <th>Ser</th>
+        <th>Per No</th>
+        <th>Rank</th>
+        <th>Name</th>
+        <th>Force</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Company</th>
+        <th>Detail</th>
+        <th>Send</th>
+    </tr>
+</thead>
+
+<tbody>
+    {% for m in members %}
+    <tr class="text-center border text-2xl hover:bg-cyan-400 cursor-pointer">
+
+        <td>{{ forloop.counter }}</td>
+        <td>{{ m.no }}</td>
+        <td>{{ m.rank }}</td>
+        <td>{{ m.name }}</td>
+        <td>{{ m.force }}</td>
+        <td>{{ m.phone }}</td>
+        <td>{{ m.email }}</td>
+
+        <!-- Company (Dropdown) -->
+       <td>
+    <form method="post">
+        {% csrf_token %}
+        {% with form=forms_dict|get_item:m.id %}
+            {{ form.company }}
+        {% endwith %}
+        
+    </form>
+</td>
+
+
+        <!-- Details (View Button) -->
+        <td>
+            <a href="{% url 'address' m.id %}" 
+               class="bg-green-500 text-sm-semibold px-3 py-1 rounded hover:bg-amber-300">
+               View
+            </a>
+        </td>
+
+        <!-- Send Button -->
+        <td>
+        <button type="submit"
+        class="bg-gradient-to-r from-purple-400 to-purple-600 px-3 py-1 rounded hover:bg-green-700">
+            Assign
+        </button>
+        <input type="hidden" name="member_id" value="{{ m.id }}">
+        </form>
+        </td>
+
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+
+</main>
+{% endblock content %}
