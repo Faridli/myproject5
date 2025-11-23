@@ -69,30 +69,43 @@ def Force_bio(request):
 # 
 # ---------------------------------------------------
 # views.py
+from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404, redirect
 
 def Force_detail(request):
-    # সব member নিয়ে আসা
     members = ForceMember.objects.all().select_related(
         'present_address', 'permanent_address'
     )
 
-    if request.method == 'POST':
-        member_id = request.POST.get('member_id')
+    # Handle AJAX POST
+    if request.method == "POST":
+        member_id = request.POST.get("member_id")
         member = get_object_or_404(ForceMember, id=member_id)
+
         form = CompanySelectForm(request.POST, instance=member)
+
         if form.is_valid():
             form.save()
-            messages.success(request, "Company updated successfully!")
-        else:
-            messages.error(request, "Form is invalid!")
-        return redirect('force-detail')  # POST হলে redirect, যাতে পুনরায় লোড হয়
 
-    # প্রতিটি member-এর জন্য CompanySelectForm তৈরি করা
+            # AJAX request → return JSON
+            if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+                return JsonResponse({
+                    "success": True,
+                    "company_name": member.company  # updated value
+                })
+
+            return redirect("force-detail")
+
+        else:
+            if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+                return JsonResponse({"success": False})
+
+    # For GET request → load table
     forms_dict = {m.id: CompanySelectForm(instance=m) for m in members}
 
-    return render(request, 'bnhq/force_detail.html', {
-        'members': members,
-        'forms_dict': forms_dict,
+    return render(request, "bnhq/force_detail.html", {
+        "members": members,
+        "forms_dict": forms_dict,
     })
 
 
